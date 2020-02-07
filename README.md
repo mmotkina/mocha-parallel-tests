@@ -48,6 +48,18 @@ mocha.run();
 
 `mocha-parallel-tests` CLI executable has its own `--max-parallel` option which is the amount of tests executed at the same time. By default it's equal to the number of logical CPI cores (`os.cpus().length`) on your computer but you can also specify your own number or set it to 0, which means that all test files will be started executing at the same time. However this is not recommended especially on machines with low number of CPUs and big number of tests executed.
 
+## Share Environment Variables
+
+The option `--share-envs` indicates that the different processes should share read and write access to the same set of environment variables.
+
+An example use case to this feature is to use `beforeEach` and `afterEach` to dynamically synchronize the workers (e.g. when working with outer services).
+
+
+## Stream output
+
+The option `--stream-output` indicates that the output of the workers will be streamed immediately to the console.
+Note that using this option, mocha-parallel-tests will not group the outputs by the workers, therefore it might be messy.
+
 ## Differences with mocha
 
 Main difference with `mocha` comes from the fact that all files are executed in separate processes/threads and don't share the scope. This means that even global variables values that you could've used to share the data between test suites will not be reliable. There's also some specific behaviour for some of the `mocha` CLI options like `--bail`: it's just applied to each test in its process. You can see the full list of differences [here](https://github.com/mocha-parallel/mocha-parallel-tests/wiki/Differences-with-mocha).

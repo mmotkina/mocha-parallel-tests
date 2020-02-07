@@ -6,7 +6,7 @@
   "main": "./dist/main/mocha.js",
   "module": "./dist/main/mocha.js",
   "bin": {
-    "mocha-parallel-tests": "dist/bin/cli.js"
+    "mocha-parallel-tests": "./index.js"
   },
   "contributors": [
     "Dmitrii Sorin <info@staypositive.ru>",
@@ -34,7 +34,10 @@
   "files": [
     "bin",
     "dist",
-    "lib"
+    "lib",
+    "src",
+    "tsconfig.json",
+    "index.js"
   ],
   "types": "dist/main/mocha.d.ts",
   "keywords": [
@@ -47,11 +50,12 @@
     "worker threads"
   ],
   "scripts": {
-    "build": "tsc && chmod +x dist/bin/cli.js",
+    "build": "tsc || chmod +x dist/bin/cli.js",
     "clean": "rm -fr dist",
     "lint": "npm run lint:sources && npm run lint:tests",
     "lint:sources": "eslint -c src/.eslintrc.js --ext .ts src/",
     "lint:tests": "eslint -c test/.eslintrc.js --ext .js test/",
+    "postinstall": "npm run clean && npm run build",
     "prepublishOnly": "npm run clean && npm run build",
     "pretest": "npm run prepublishOnly",
     "test": "bash test/index.sh",
@@ -66,7 +70,7 @@
     "node": ">=8"
   },
   "peerDependencies": {
-    "mocha": "3.0.0 - 6.x.x"
+    "mocha": "3.0.0 - 7.x.x"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -75,7 +79,7 @@
     "@types/circular-json": "^0.4.0",
     "@types/debug": "^4.1.5",
     "@types/mocha": "^5.2.1",
-    "@types/node": "^12.7.2",
+    "@types/node": "^13.1.8",
     "@types/uuid": "^3.4.5",
     "@types/yargs": "^13.0.2",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
@@ -85,7 +89,7 @@
     "eslint": "^6.2.2",
     "husky": "^3.0.4",
     "microtime": "^3.0.0",
-    "mocha": "^6.2.0",
+    "mocha": "^7.0.0",
     "mocha-allure-reporter": "^1.4.0",
     "mocha-jenkins-reporter": "^0.4.2",
     "mocha-teamcity-reporter": "^3.0.0",
